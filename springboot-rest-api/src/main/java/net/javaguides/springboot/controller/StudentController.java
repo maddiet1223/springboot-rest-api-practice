@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
     //http://localhost:8080/student
@@ -22,7 +23,7 @@ public class StudentController {
     }
 
     //http://localhost:8080/students
-    @GetMapping("students")
+    @GetMapping()
     public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
         students.add(new Student(2,"Murali","Alamalakala"));
@@ -34,7 +35,7 @@ public class StudentController {
 
     //Spring boot rest api with path variable
     //http://localhost:8080/students/1
-    @GetMapping("students/{id}/{first-name}/{last-name}")
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int studentId,
                                        @PathVariable("first-name") String firstName,
                                        @PathVariable("last-name") String lastName) {
@@ -44,7 +45,7 @@ public class StudentController {
 
     //Spring boot rest api with request param annotation
     //http://localhost:8080/students/query?id=1&firstName="Madhavi"&"lastName="Thurlapati"
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int id,
                                           @RequestParam String firstName,
                                           @RequestParam String lastName) {
@@ -54,7 +55,7 @@ public class StudentController {
 
     //Spring boot rest api with post request
     //http://localhost:8080/students/create
-    @PostMapping("students/create")
+    @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         System.out.println(student.getId());
@@ -65,7 +66,7 @@ public class StudentController {
 
     //Spring boot rest api with put request
     //http://localhost:8080/students/3/update
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student,@PathVariable("id") int studentId) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
@@ -74,7 +75,7 @@ public class StudentController {
 
     //Spring boot rest api with delete request
     //http://localhost:8080/students/3/delete
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId) {
         System.out.println(studentId);
        return ResponseEntity.ok("Student deleted successfully!");
